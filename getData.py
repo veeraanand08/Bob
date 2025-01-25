@@ -18,28 +18,6 @@ def getFieldValue(google_id, field):
 # Quizzes (only for test/quizzes): name,Q1) blah blah blah,Q1ANSWER) blah blah blah,Q2) blah blah blah,...
 
 
-def getBusyHours(google_id):
-    busy_hours = []
-    # Read the CSV file and convert to desired format
-    with open(csv_file, 'r') as file:
-        reader = csv.reader(file)
-        next(reader)  # Skip header row
-        for row in reader:
-            start_time, end_time = row
-            start_time_obj = datetime.datetime.fromisoformat(start_time)
-            end_time_obj = datetime.datetime.fromisoformat(end_time)
-
-            date = start_time_obj.strftime('%Y-%m-%d')  # Format as YYYY-MM-DD
-            start_hour = start_time_obj.strftime('%H:%M')  # Include minutes for accuracy
-            end_hour = end_time_obj.strftime('%H:%M')  # Include minutes for accuracy
-
-            # Append the formatted string to the list
-            busy_hours.append(f"{date} {start_hour}-{end_hour}")
-            #['2025-01-26 05:00-07:00', '2025-01-26 14:00-16:00', '2025-01-28 05:00-16:00']
-    return busy_hours
-
-
-
 def getAssessmentHours(google_id):
     assessment_hours = getFieldValue(google_id="---", field="assessmentHours")
     result = []
