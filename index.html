@@ -46,7 +46,7 @@
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
 
-    <!-- Action Buttons for Login/Create Account -->
+    <!-- Action Buttons for Login/Create Account --> 
 
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -54,8 +54,7 @@
 
     gapi.load('auth2', function(){
         gapi.auth2.init();
-    })
-
+    });
 
         let userEmail, userName, googleId;
 
@@ -70,8 +69,8 @@
             console.log("Name: " + userName);
             console.log("Email: " + userEmail);
 
-            // Update the UI to display user information
-            document.getElementById('loginButton').innerText = `Logged in as ${userName}`;
+            // Redirect to the main calendar page after sign-in
+            window.location.href = "mainCalendar.html";
         }
 
         // Optional: Handle the login button (you can customize behavior here)
