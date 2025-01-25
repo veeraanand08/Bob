@@ -2,8 +2,30 @@ import google.generativeai as genai
 import os
 import requests  
 from datetime import datetime, timedelta
+from flask import Flask, request, jsonify
+import json
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+app = Flask(__name__)
+
+@app.route('/submit_event', methods=['POST'])
+def submit_event():
+    # Get form data
+    event_type = request.form['eventType']
+    event_name = request.form['eventName']
+    event_date = request.form['eventDate']
+    event_time = request.form['eventTime']
+    event_content = request.form['textInput']
+    # Prepare event data as a dictionary
+    event_data = {
+        'type': event_type,
+        'name': event_name,
+        'date': event_date,
+        'time_needed': event_time,
+        'content': event_content
+    }
+    return event_data
 
 
 

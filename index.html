@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login or Create Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f5f5f5;
+        }
+        .google-sign-in-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+        .action-buttons {
+            margin-top: 30px;
+        }
+        .action-buttons button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .action-buttons button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <meta name="google-signin-client_id" content="375024145336-rjlcbi085ggfsfhf8n37ttm6920p7j29.apps.googleusercontent.com">
+</head>
+<body>
+
+    <h1>Welcome to Our Website</h1>
+    <p>Sign in with Google to log in, or create a new account if you're a new user.</p>
+
+    <!-- Google Sign-In Button -->
+    <div class="google-sign-in-container">
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+
+    <!-- Action Buttons for Login/Create Account -->
+
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+
+    gapi.load('auth2', function(){
+        gapi.auth2.init();
+    })
+
+
+        let userEmail, userName, googleId;
+
+        // Function to handle successful Google Sign-In
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            googleId = profile.getId(); // Google ID
+            userName = profile.getName(); // User's name
+            userEmail = profile.getEmail(); // User's email address
+
+            console.log("Google ID: " + googleId);
+            console.log("Name: " + userName);
+            console.log("Email: " + userEmail);
+
+            // Update the UI to display user information
+            document.getElementById('loginButton').innerText = `Logged in as ${userName}`;
+        }
+
+        // Optional: Handle the login button (you can customize behavior here)
+        function handleLogin() {
+            alert("Please use the Google Sign-In button to log in.");
+        }
+
+        // Logout function to sign out the user
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log("User signed out.");
+                // Reset UI
+                document.getElementById('loginButton').innerText = "Login with Google/Create Account";
+            });
+        }
+    </script>
+
+</body>
+</html>

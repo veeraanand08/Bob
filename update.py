@@ -11,7 +11,7 @@ def updateData(google_id, update_fields):
 
 
 def fetchUpdates(google_id):
-    #gather data from jibreel and frontend here
+    #gather data from jibreel here
     #format here
     updateData(
     google_id,
