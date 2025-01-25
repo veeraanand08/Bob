@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login or Create Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f5f5f5;
+        }
+        .google-sign-in-button {
+            margin-top: 20px;
+        }
+        .action-buttons {
+            margin-top: 30px;
+        }
+        .action-buttons button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .action-buttons button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to Our Website</h1>
+    <p>Sign in with Google to log in, or create a new account if you're a new user.</p>
+
+    <!-- Google Sign-In Button -->
+    <div class="google-sign-in-button" id="gSignIn"></div>
+
+    <!-- Action Buttons for Login/Create Account -->
+    <div class="action-buttons">
+        <button id="loginButton" onclick="handleLogin()">Login with Google</button>
+        <button id="createAccountButton" onclick="handleCreateAccount()">Create Account with Google</button>
+    </div>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+        let userEmail, userName, googleId;
+
+        // Function for logging in (existing user)
+        function handleLogin() {
+            if (userEmail && userName && googleId) {
+                // Store the user details in sessionStorage
+                sessionStorage.setItem('userEmail', userEmail);
+                sessionStorage.setItem('userName', userName);
+                sessionStorage.setItem('googleId', googleId);
+
+                // Redirect to main calendar page
+                window.location.href = "mainCalendar.html";
+            } else {
+                alert("Please sign in with Google first.");
+            }
+        }
+
+        // Function for creating a new account (new user)
+        function handleCreateAccount() {
+            if (userEmail && userName && googleId) {
+                // Store the user details in sessionStorage
+                sessionStorage.setItem('userEmail', userEmail);
+                sessionStorage.setItem('userName', userName);
+                sessionStorage.setItem('googleId', googleId);
+
+                // Redirect to blocked hours page
+                window.location.href = "HoursBlocked.html";
+            } else {
+                alert("Please sign in with Google first.");
+            }
+        }
+
+        // Function that runs after Google sign-in
+        function onSignIn(googleUser) {
+            // Get user details after sign-in
+            var profile = googleUser.getBasicProfile();
+            userEmail = profile.getEmail();
+            userName = profile.getName();
+            googleId = profile.getId();
+
+            // Update buttons visibility
+            document.getElementById('loginButton').style.display = 'block';
+            document.getElementById('createAccountButton').style.display = 'block';
+
+            // Optional: Disable Google Sign-In button after sign-in
+            document.getElementById('gSignIn').style.display = 'none';
+        }
+
+        // Render the Google sign-in button
+        gapi.signin2.render('gSignIn', {
+            'scope': 'profile email',
+            'width': 200,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'dark',
+            'onsuccess': onSignIn
+        });
+    </script>
+
+</body>
+</html>
