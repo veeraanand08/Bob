@@ -10,13 +10,14 @@ def updateData(google_id, update_fields):
     )
 
 
-def fetchUpdates():
-    #gather data from jibreel  here
+def fetchUpdates(google_id):
+    #gather data from jibreel and frontend here
+    #format here
     updateData(
-    google_id="---",
+    google_id,
     update_fields={
-        "": "",
-        "": "",
-        "": ""
+        "assessmentHours": "",
+        "assignmentHours": "",
+        "quizzes": ""
     }
 )

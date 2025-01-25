@@ -7,7 +7,7 @@ collection_name = dbname["bobData"]
 
 def getFieldValue(google_id, field):
     # Use projection to retrieve only the specified field
-    query = {"google_id": google_id}
+    query = {"id": google_id}
     projection = {field: 1, "_id": 0}  # Include only the desired field
     result = collection_name.find_one(query, projection)
     return result.get(field)  # Return the value of the field
@@ -19,7 +19,7 @@ def getFieldValue(google_id, field):
 
 
 def getAssessmentHours(google_id):
-    assessment_hours = getFieldValue(google_id="---", field="assessmentHours")
+    assessment_hours = getFieldValue(id=google_id, field="assessmentHours")
     result = []
 
     # Split the input string into individual entries by commas
@@ -46,7 +46,7 @@ def getAssessmentHours(google_id):
 
 
 def getAssignmentHours(google_id):
-    assignment_hours = getFieldValue(google_id="---", field="assignmentHours")
+    assignment_hours = getFieldValue(id="---", field="assignmentHours")
     result = []
 
     # Split the input string into individual entries by commas
