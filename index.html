@@ -48,13 +48,18 @@
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
 
+<<<<<<< HEAD
     <!-- Action Buttons for Login/Create Account --> 
 
 
     
+=======
+>>>>>>> ece82edfa5263e99d49307cb77dff8bccf9c9227
     <script>
+        // Initialize the Google Auth library
         gapi.load('auth2', function() {
             gapi.auth2.init({
+<<<<<<< HEAD
                 clientId: 'CLIENT_ID',
                 scope: 'https://www.googleapis.com/auth/spreadsheets',
                 }).then(function() {
@@ -67,34 +72,40 @@
                 });
             });
         
+=======
+                client_id: '375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com'
+            }).then(() => {
+                console.log("Google Auth initialized successfully.");
+            }).catch(err => {
+                console.error("Error initializing Google Auth:", err);
+            });
+        });
+>>>>>>> ece82edfa5263e99d49307cb77dff8bccf9c9227
 
         let userEmail, userName, googleId;
 
         // Function to handle successful Google Sign-In
         function onSignIn(googleUser) {
-            var profile = googleUser.getBasicProfile();
+            const profile = googleUser.getBasicProfile();
             googleId = profile.getId(); // Google ID
             userName = profile.getName(); // User's name
             userEmail = profile.getEmail(); // User's email address
 
-            console.log("Google ID: " + googleId);
-            console.log("Name: " + userName);
-            console.log("Email: " + userEmail);
+            console.log("Google ID:", googleId);
+            console.log("Name:", userName);
+            console.log("Email:", userEmail);
 
             // Redirect to the main calendar page after sign-in
-            window.location.replace("https://veeraanand08.github.io/mainCalendar.html");
+            window.location.href = "/mainCalendar.html";
         }
 
-        // Optional: Handle the login button (you can customize behavior here)
-        function handleLogin() {
-            alert("Please use the Google Sign-In button to log in.");
-        }
-
-        // Logout function to sign out the user
+        // Optional: Logout function to sign out the user
         function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
+            const auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(() => {
                 console.log("User signed out.");
+            }).catch(err => {
+                console.error("Error signing out:", err);
             });
         }
     </script>
