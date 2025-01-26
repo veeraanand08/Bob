@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content="375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com">
     <title>Login or Create Account</title>
     <style>
         body {
@@ -34,6 +35,7 @@
             background-color: #45a049;
         }
     </style>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
 
@@ -45,15 +47,10 @@
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
 
-    <!-- Action Buttons for Login/Create Account --> 
-
-    <meta name="google-signin-client_id" content="375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script>
-
-    gapi.load('auth2', function(){
-        gapi.auth2.init();
-    });
+        gapi.load('auth2', function() {
+            gapi.auth2.init();
+        });
 
         let userEmail, userName, googleId;
 
@@ -82,8 +79,6 @@
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
                 console.log("User signed out.");
-                // Reset UI
-                document.getElementById('loginButton').innerText = "Login with Google/Create Account";
             });
         }
     </script>
