@@ -48,14 +48,15 @@ def get_free_times(calendar_service, start_date, end_date):
 
     return free_times
 
+
+
 SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 flow = InstalledAppFlow.from_client_secrets_file(
-    "C:/Users/jchoh/Downloads/client_secret_375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com.json",  SCOPES)
+    "C:/Users/jchoh/Downloads/client_secret_375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com.json", SCOPES)
 credentials = flow.run_local_server(port=0)
 
 calendar_service = build('calendar', 'v3', credentials=credentials)
-
 free_times = get_free_times(
     calendar_service=calendar_service,
     start_date='2025-01-26T00:00:00Z',
