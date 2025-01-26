@@ -161,16 +161,22 @@
 
     // Function to load Google Calendar based on user ID
     window.onload = function() {
-    const userGoogleId = localStorage.getItem('googleId'); // Retrieve the ID stored after login
-    if (userGoogleId) {
+    const userEmail = localStorage.getItem('googleId'); // Retrieve the email stored after login
+    if (userEmail) {
         const iframe = document.getElementById('calendarIframe');
         
-        // Manually replace all occurrences of '@' with '%40'
+        // Manually replace '@' with '%40'
+        const formattedEmail = userEmail.replace('@', '%40');
         
-        console.log(userGoogleId);
-        iframe.src = `https://calendar.google.com/calendar/embed?src=veera.anand08%40gmail.com&ctz=America%2FNew_York`;
+        // Log the email and resulting URL for debugging
+        console.log(formattedEmail);
+        const calendarUrl = `https://calendar.google.com/calendar/embed?src=${formattedEmail}&ctz=America%2FNew_York`;
+        console.log(calendarUrl); // Check if the URL is correct
+        
+        iframe.src = calendarUrl; // Set the iframe src to the formatted URL
     }
 }
+
 
 
 
