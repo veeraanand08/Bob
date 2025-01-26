@@ -80,8 +80,7 @@
     <button class="add-button" onclick="togglePopup()">Add</button>
 
     <!-- Embed Google Calendar -->
-    <iframe src="https://calendar.google.com/calendar/embed?src=veera.anand08%40gmail.com&ctz=America%2FNew_York" 
-            style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    <iframe id="calendarIframe" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 
     <!-- Popup for Adding Events -->
     <div class="popup" id="popup">
@@ -159,6 +158,28 @@
             alert('There was an error submitting the event.');
         }
     }
+
+    // Function to load Google Calendar based on user ID
+    window.onload = function() {
+    const userEmail = localStorage.getItem('googleId'); // Retrieve the email stored after login
+    if (userEmail) {
+        const iframe = document.getElementById('calendarIframe');
+        
+        // Manually replace '@' with '%40'
+        const formattedEmail = userEmail.replace('@', '%40');
+        
+        // Log the email and resulting URL for debugging
+        console.log(formattedEmail);
+        const calendarUrl = `https://calendar.google.com/calendar/embed?src=${formattedEmail}&ctz=America%2FNew_York`;
+        console.log(calendarUrl); // Check if the URL is correct
+        
+        iframe.src = calendarUrl; // Set the iframe src to the formatted URL
+    }
+}
+
+
+
+
     </script>
 
 </body>
