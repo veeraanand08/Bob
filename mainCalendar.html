@@ -164,9 +164,14 @@
         const userGoogleId = localStorage.getItem('googleId'); // Retrieve the ID stored after login
         if (userGoogleId) {
             const iframe = document.getElementById('calendarIframe');
-            iframe.src = `https://calendar.google.com/calendar/embed?src=${userGoogleId}&ctz=America%2FNew_York`;
+            
+            // Encode the Google ID to handle special characters like '@'
+            const encodedGoogleId = encodeURIComponent(userGoogleId);
+            
+            iframe.src = `https://calendar.google.com/calendar/embed?src=${encodedGoogleId}&ctz=America%2FNew_York`;
         }
     }
+
     </script>
 
 </body>
