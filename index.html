@@ -4,12 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<<<<<<< HEAD
-    <meta name="google-signin-client_id" content="375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com">
-=======
-    <meta http-equiv="Cross-Origin-Opener-Policy" content="">
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin-allow-popups">
     <meta http-equiv="Cross-Origin-Resource-Policy" content="cross-origin">
->>>>>>> 6b3539f21434384d5c087fa76081acfcb852b2eb
+    <meta name="google-signin-client_id" content="375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com">
     <title>Login or Create Account</title>
     <style>
         body {
@@ -40,40 +37,33 @@
             background-color: #45a049;
         }
     </style>
-    <meta name="google-signin-client_id" content="375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-
     <h1>rahhh - HoyaHackathon Team 611</h1>
     <p>Sign in with Google to log in, or create a new account if you're a new user.</p>
 
-    <!-- Google Sign-In Button -->
+    <!-- Google Identity Services Button -->
     <div class="google-sign-in-container">
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <div id="g_id_onload"
+             data-client_id="375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com"
+             data-context="signin"
+             data-ux_mode="popup"
+             data-callback="handleCredentialResponse"
+             data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin" data-type="standard"></div>
     </div>
 
-    <!-- Action Buttons for Login/Create Account --> 
-
-
-    
     <script>
-        // Initialize the Google Auth library
-        gapi.load('client:auth2', function() {
-        gapi.auth2.init({
-            clientId: '375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com',
-            });
-        });
-        
-
         let userEmail, userName, googleId;
 
-        // Function to handle successful Google Sign-In
-        function onSignIn(googleUser) {
-            const profile = googleUser.getBasicProfile();
-            googleId = profile.getId(); // Google ID
-            userName = profile.getName(); // User's name
-            userEmail = profile.getEmail(); // User's email address
+        // Function to handle Google Identity Services response
+        function handleCredentialResponse(response) {
+            const decodedJWT = JSON.parse(atob(response.credential.split('.')[1]));
+            googleId = decodedJWT.sub; // Google ID
+            userName = decodedJWT.name; // User's name
+            userEmail = decodedJWT.email; // User's email address
 
             console.log("Google ID:", googleId);
             console.log("Name:", userName);
@@ -82,17 +72,6 @@
             // Redirect to the main calendar page after sign-in
             window.location.href = "/mainCalendar.html";
         }
-
-        // Optional: Logout function to sign out the user
-        function signOut() {
-            const auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(() => {
-                console.log("User signed out.");
-            }).catch(err => {
-                console.error("Error signing out:", err);
-            });
-        }
     </script>
-
 </body>
 </html>
