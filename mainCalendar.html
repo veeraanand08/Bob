@@ -167,7 +167,7 @@
             
             // Encode the Google ID to handle special characters like '@'
             const encodedGoogleId = encodeURIComponent(userGoogleId);
-            
+            console.log(encodedGoogleId)
             iframe.src = `https://calendar.google.com/calendar/embed?src=${encodedGoogleId}&ctz=America%2FNew_York`;
         }
     }
