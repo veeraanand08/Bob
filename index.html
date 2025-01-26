@@ -60,6 +60,7 @@
 
         // Function to handle successful Google Sign-In
         function onSignIn(googleUser) {
+            console.log("hi");
             var profile = googleUser.getBasicProfile();
             googleId = profile.getId(); // Google ID
             userName = profile.getName(); // User's name
@@ -70,7 +71,7 @@
             console.log("Email: " + userEmail);
 
             // Redirect to the main calendar page after sign-in
-            window.location.href = "https:/veeraanand08.github.io/mainCalendar.html";
+            window.location.replace("https://veeraanand08.github.io/mainCalendar.html");
         }
 
         // Optional: Handle the login button (you can customize behavior here)
