@@ -48,39 +48,28 @@
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
 
-<<<<<<< HEAD
     <!-- Action Buttons for Login/Create Account --> 
 
 
     
-=======
->>>>>>> ece82edfa5263e99d49307cb77dff8bccf9c9227
     <script>
         // Initialize the Google Auth library
-        gapi.load('auth2', function() {
-            gapi.auth2.init({
-<<<<<<< HEAD
-                clientId: 'CLIENT_ID',
-                scope: 'https://www.googleapis.com/auth/spreadsheets',
-                }).then(function() {
-                return gapi.auth2.getAuthInstance().signIn();
-                }).then(function() {
-                console.log('Signed in!');
-                
-                }, function(error) {
-                console.error(error);
-                });
+        var token;
+
+        function initGoogle() {
+            // init client
+            const client = google.accounts.oauth2.initTokenClient({
+                client_id: "YOUR_CLIENT_ID",
+                callback: handleCredentialResponse,
+
+                scope: "https://www.googleapis.com/auth/spreadsheets",
             });
+            
+            // send authorize request
+            // this prompts user to grant access
+            client.requestAccessToken();
+        }
         
-=======
-                client_id: '375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com'
-            }).then(() => {
-                console.log("Google Auth initialized successfully.");
-            }).catch(err => {
-                console.error("Error initializing Google Auth:", err);
-            });
-        });
->>>>>>> ece82edfa5263e99d49307cb77dff8bccf9c9227
 
         let userEmail, userName, googleId;
 
