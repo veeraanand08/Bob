@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content="375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com">
     <title>Login or Create Account</title>
     <style>
         body {
@@ -47,17 +48,25 @@
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
 
-<<<<<<< HEAD
     <!-- Action Buttons for Login/Create Account --> 
 
 
     
-=======
->>>>>>> afb60dcb52f76e1bac1f2630e3bfcd1f4a58f1ee
     <script>
         gapi.load('auth2', function() {
-            gapi.auth2.init();
-        });
+            gapi.auth2.init({
+                clientId: 'CLIENT_ID',
+                scope: 'https://www.googleapis.com/auth/spreadsheets',
+                }).then(function() {
+                return gapi.auth2.getAuthInstance().signIn();
+                }).then(function() {
+                console.log('Signed in!');
+                
+                }, function(error) {
+                console.error(error);
+                });
+            });
+        
 
         let userEmail, userName, googleId;
 
