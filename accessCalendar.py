@@ -2,9 +2,14 @@ from datetime import datetime, timedelta
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
+from flask import Flask, request, jsonify
 
+app = Flask(__name__)
 
-
+@app.route('/send_credentials', methods=['POST'])
+def receive_credentials():
+    data = request.get_json()
+    access_token = data.get('access_token')
 
 def get_free_times(calendar_service, start_date, end_date):
     events_result = calendar_service.events().list(

@@ -113,17 +113,20 @@
     </div>
 
     <script>
+    // Function to toggle the visibility of the popup
     function togglePopup() {
         const popup = document.getElementById('popup');
         popup.classList.toggle('active');
     }
 
+    // Function to toggle content input based on event type
     function toggleContentInput() {
         const eventType = document.getElementById('eventType').value;
         const testContent = document.getElementById('testContent');
         testContent.style.display = eventType === 'test' ? 'block' : 'none';
     }
 
+    // Function to submit event data
     async function submitEvent() {
         const eventType = document.getElementById('eventType').value;
         const eventName = document.getElementById('eventName').value;
@@ -161,26 +164,67 @@
 
     // Function to load Google Calendar based on user ID
     window.onload = function() {
-    const userEmail = localStorage.getItem('email'); // Retrieve the email stored after login
-    if (userEmail) {
-        const iframe = document.getElementById('calendarIframe');
-        
-        // Manually replace '@' with '%40'
-        const formattedEmail = userEmail.replace('@', '%40');
-        
-        // Log the email and resulting URL for debugging
-        console.log(formattedEmail);
-        const calendarUrl = `https://calendar.google.com/calendar/embed?src=${formattedEmail}&ctz=America%2FNew_York`;
-        console.log(calendarUrl); // Check if the URL is correct
-        
-        iframe.src = calendarUrl; // Set the iframe src to the formatted URL
+        const userEmail = localStorage.getItem('email'); // Retrieve the email stored after login
+        if (userEmail) {
+            const iframe = document.getElementById('calendarIframe');
+            
+            // Manually replace '@' with '%40'
+            const formattedEmail = userEmail.replace('@', '%40');
+            
+            // Log the email and resulting URL for debugging
+            console.log(formattedEmail);
+            const calendarUrl = `https://calendar.google.com/calendar/embed?src=${formattedEmail}&ctz=America%2FNew_York`;
+            console.log(calendarUrl); // Check if the URL is correct
+            
+            iframe.src = calendarUrl; // Set the iframe src to the formatted URL
+        }
     }
-}
 
+    // Google Authentication & Sending Credentials to Python
+    function authenticateAndSendCredentials() {
+        gapi.auth2.getAuthInstance().signIn().then(function() {
+            console.log("Sign-in successful");
 
+            const user = gapi.auth2.getAuthInstance().currentUser.get();
+            const authResponse = user.getAuthResponse();
+            const accessToken = authResponse.access_token; // Get the access token
 
+            // Send the access token to your Python server
+            fetch('/send_credentials', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    access_token: accessToken
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Credentials sent successfully');
+                } else {
+                    console.error('Failed to send credentials');
+                }
+            })
+            .catch(error => {
+                console.error('Error sending credentials:', error);
+            });
+        }).catch(function(error) {
+            console.error('Sign-in failed', error);
+        });
+    }
 
+    // Load the Google API client
+    gapi.load('client:auth2', function() {
+        gapi.auth2.init({client_id: '<YOUR_CLIENT_ID>'});  // Replace with your Google OAuth client ID
+    });
     </script>
+
+    <!-- Add Google API client script -->
+    <script src="https://apis.google.com/js/api.js"></script>
+
+    <!-- Button to trigger Google sign-in -->
+    <button onclick="authenticateAndSendCredentials()">Sign in with Google</button>
 
 </body>
 </html>
