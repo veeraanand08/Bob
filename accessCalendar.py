@@ -1,5 +1,10 @@
 from datetime import datetime, timedelta
-from googleapicliZAent.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from google.auth.transport.requests import Request
+
+
+
 
 def get_free_times(calendar_service, start_date, end_date):
     events_result = calendar_service.events().list(
@@ -37,6 +42,12 @@ def get_free_times(calendar_service, start_date, end_date):
             free_times.append((free_start.isoformat(), free_end.isoformat()))
 
     return free_times
+
+SCOPES = ['https://www.googleapis.com/auth/calendar']
+
+flow = InstalledAppFlow.from_client_secrets_file(
+    "C:/Users/jchoh/Downloads/client_secret_375024145336-9441tkreviiiknfeul3e11f51e42ecje.apps.googleusercontent.com.json",  SCOPES)
+credentials = flow.run_local_server(port=0)
 
 calendar_service = build('calendar', 'v3', credentials=credentials)
 
