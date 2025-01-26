@@ -161,16 +161,18 @@
 
     // Function to load Google Calendar based on user ID
     window.onload = function() {
-        const userGoogleId = localStorage.getItem('googleId'); // Retrieve the ID stored after login
-        if (userGoogleId) {
-            const iframe = document.getElementById('calendarIframe');
-            
-            // Encode the Google ID to handle special characters like '@'
-            const encodedGoogleId = encodeURIComponent(userGoogleId);
-            console.log(encodedGoogleId)
-            iframe.src = `https://calendar.google.com/calendar/embed?src=${encodedGoogleId}&ctz=America%2FNew_York`;
-        }
+    const userGoogleId = localStorage.getItem('googleId'); // Retrieve the ID stored after login
+    if (userGoogleId) {
+        const iframe = document.getElementById('calendarIframe');
+        
+        // Manually replace '@' with '%40'
+        const manualEncodedGoogleId = userGoogleId.replace('@', '%40');
+        console.log(manualEncodedGoogleId);
+        
+        iframe.src = `https://calendar.google.com/calendar/embed?src=${manualEncodedGoogleId}&ctz=America%2FNew_York`;
     }
+}
+
 
     </script>
 
