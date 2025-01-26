@@ -80,8 +80,7 @@
     <button class="add-button" onclick="togglePopup()">Add</button>
 
     <!-- Embed Google Calendar -->
-    <iframe src="https://calendar.google.com/calendar/embed?src=veera.anand08%40gmail.com&ctz=America%2FNew_York" 
-            style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    <iframe id="calendarIframe" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 
     <!-- Popup for Adding Events -->
     <div class="popup" id="popup">
@@ -157,6 +156,15 @@
         } catch (error) {
             console.error('Error:', error);
             alert('There was an error submitting the event.');
+        }
+    }
+
+    // Function to load Google Calendar based on user ID
+    window.onload = function() {
+        const userGoogleId = localStorage.getItem('googleId'); // Retrieve the ID stored after login
+        if (userGoogleId) {
+            const iframe = document.getElementById('calendarIframe');
+            iframe.src = `https://calendar.google.com/calendar/embed?src=${userGoogleId}&ctz=America%2FNew_York`;
         }
     }
     </script>

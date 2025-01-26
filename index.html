@@ -56,21 +56,54 @@
     </div>
 
     <script>
-        let userEmail, userName, googleId;
-
-        // Function to handle Google Identity Services response
+        // Consolidated handleCredentialResponse function
         function handleCredentialResponse(response) {
             const decodedJWT = JSON.parse(atob(response.credential.split('.')[1]));
-            googleId = decodedJWT.sub; // Google ID
-            userName = decodedJWT.name; // User's name
-            userEmail = decodedJWT.email; // User's email address
+            const googleId = decodedJWT.sub; // Google ID
+            const userName = decodedJWT.name; // User's name
+            const email = decodedJWT.email; // User's email address
 
             console.log("Google ID:", googleId);
             console.log("Name:", userName);
-            console.log("Email:", userEmail);
+            console.log("Email:", email);
+
+            // Store the Google ID in localStorage for use in mainCalendar.html
+            localStorage.setItem('googleId', googleId);
+
+            // Send the data to your backend (if necessary)
+            sendUserDataToBackend(email, userName, googleId);
 
             // Redirect to the main calendar page after sign-in
             window.location.href = "/mainCalendar.html";
+        }
+
+        // Function to send the email to the backend
+        function sendUserDataToBackend(email, userName, googleId) {
+            // Data payload to send to the backend
+            const payload = {
+                email: email,
+                userName: userName,
+                googleId: googleId
+            };
+
+            // Send data to backend via POST request
+            fetch("https://your-backend-endpoint.com/api/save-user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("User data sent successfully.");
+                } else {
+                    console.error("Failed to send user data. Status:", response.status);
+                }
+            })
+            .catch(error => {
+                console.error("Error sending user data:", error);
+            });
         }
     </script>
 </body>
