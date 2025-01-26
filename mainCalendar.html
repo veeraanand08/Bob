@@ -165,13 +165,14 @@
     if (userGoogleId) {
         const iframe = document.getElementById('calendarIframe');
         
-        // Manually replace '@' with '%40'
-        const manualEncodedGoogleId = userGoogleId.replace('@', '%40');
+        // Manually replace all occurrences of '@' with '%40'
+        const manualEncodedGoogleId = userGoogleId.replace(/@/g, '%40');
         console.log(manualEncodedGoogleId);
         
         iframe.src = `https://calendar.google.com/calendar/embed?src=${manualEncodedGoogleId}&ctz=America%2FNew_York`;
     }
 }
+
 
 
     </script>
