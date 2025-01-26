@@ -166,8 +166,6 @@
         const iframe = document.getElementById('calendarIframe');
         
         // Manually replace all occurrences of '@' with '%40'
-        const manualEncodedGoogleId = userGoogleId.replace(/@/g, '%40');
-        console.log(manualEncodedGoogleId);
         
         iframe.src = `https://calendar.google.com/calendar/embed?src=veera.anand08%40gmail.com&ctz=America%2FNew_York`;
     }
