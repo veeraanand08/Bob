@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SmartCalendar</title>
+    <title>Login or Create Account</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,75 +33,12 @@
         .action-buttons button:hover {
             background-color: #45a049;
         }
-        iframe {
-            border: none;
-            width: 100%;
-            height: 600px;
-        }
-        .add-button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .add-button:hover {
-            background-color: #45a049;
-        }
-        .popup {
-            position: fixed;
-            top: 0;
-            right: -100%; /* Fully hide the popup off-screen */
-            width: 400px;
-            height: 100%;
-            background-color: white;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-            transition: right 0.3s ease;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        .popup.active {
-            right: 0; /* Slide the popup into view */
-        }
-        .popup h2 {
-            margin-bottom: 20px;
-        }
-        .popup label {
-            margin-top: 10px;
-            text-align: left;
-        }
-        .popup input, .popup select, .popup textarea {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .popup button {
-            margin-top: 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .popup button:hover {
-            background-color: #45a049;
-        }
-        #calendarPage {
-            display: none;
-        }
     </style>
     <meta name="google-signin-client_id" content="375024145336-rjlcbi085ggfsfhf8n37ttm6920p7j29.apps.googleusercontent.com">
 </head>
 <body>
 
-    <h1>SmartCalendar - HoyaHackathon Team 611</h1>
+    <h1>SmartCalander - HoyaHackathon Team 611</h1>
     <p>Sign in with Google to log in, or create a new account if you're a new user.</p>
 
     <!-- Google Sign-In Button -->
@@ -109,52 +46,15 @@
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </div>
 
-    <!-- Main Calendar Page (hidden initially) -->
-    <div id="calendarPage">
-        <h1>Your Calendar</h1>
-        <button class="add-button" onclick="togglePopup()">Add</button>
+    <!-- Action Buttons for Login/Create Account --> 
 
-        <!-- Embed Google Calendar -->
-        <iframe src="https://calendar.google.com/calendar/embed?src=veera.anand08%40gmail.com&ctz=America%2FNew_York" 
-                style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-
-        <!-- Popup for Adding Events -->
-        <div class="popup" id="popup">
-            <h2>Add Event</h2>
-            <label for="eventType">Type:</label>
-            <select id="eventType" onchange="toggleContentInput()">
-                <option value="assignment">Assignment</option>
-                <option value="test">Test/Quiz</option>
-            </select>
-
-            <label for="eventName">Name:</label>
-            <input type="text" id="eventName" placeholder="Enter name of the event">
-
-            <label for="eventDate">Date:</label>
-            <input type="date" id="eventDate">
-
-            <label for="eventTime">Time Needed (in hours):</label>
-            <input type="number" id="eventTime" min="0.5" step="0.5" placeholder="Enter time needed">
-
-            <div id="testContent" style="display: none;">
-                <label for="contentType">Content:</label>
-                <select id="contentType" onchange="toggleUpload()">
-                    <option value="text">Type</option>
-                </select>
-
-                <textarea id="textInput" placeholder="Type content here"></textarea>
-            </div>
-
-            <button onclick="submitEvent()">Submit</button>
-        </div>
-    </div>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script>
 
-        gapi.load('auth2', function() {
-            gapi.auth2.init();
-        });
+    gapi.load('auth2', function(){
+        gapi.auth2.init();
+    });
 
         let userEmail, userName, googleId;
 
@@ -169,58 +69,23 @@
             console.log("Name: " + userName);
             console.log("Email: " + userEmail);
 
-            // Show the calendar page and hide the login
-            document.getElementById("calendarPage").style.display = "block";
-            document.body.style.padding = "0"; // Remove padding for the calendar page view
-            document.querySelector("h1").style.display = "none"; // Hide the title
-            document.querySelector("p").style.display = "none"; // Hide the paragraph
-            document.querySelector(".google-sign-in-container").style.display = "none"; // Hide the sign-in button
+            // Redirect to the main calendar page after sign-in
+            window.location.href = "https:/veeraanand08.github.io/mainCalendar.html";
         }
 
-        function togglePopup() {
-            const popup = document.getElementById('popup');
-            popup.classList.toggle('active');
+        // Optional: Handle the login button (you can customize behavior here)
+        function handleLogin() {
+            alert("Please use the Google Sign-In button to log in.");
         }
 
-        function toggleContentInput() {
-            const eventType = document.getElementById('eventType').value;
-            const testContent = document.getElementById('testContent');
-            testContent.style.display = eventType === 'test' ? 'block' : 'none';
-        }
-
-        async function submitEvent() {
-            const eventType = document.getElementById('eventType').value;
-            const eventName = document.getElementById('eventName').value;
-            const eventDate = document.getElementById('eventDate').value;
-            const eventTime = document.getElementById('eventTime').value;
-            const textInput = document.getElementById('textInput').value;
-
-            const eventData = {
-                eventType,
-                eventName,
-                eventDate,
-                eventTime,
-                content: textInput
-            };
-
-            try {
-                const response = await fetch('/submit_event', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(eventData)
-                });
-                if (response.ok) {
-                    alert('Event submitted successfully!');
-                    togglePopup();  // Close popup on success
-                } else {
-                    alert('Failed to submit event.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('There was an error submitting the event.');
-            }
+        // Logout function to sign out the user
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log("User signed out.");
+                // Reset UI
+                document.getElementById('loginButton').innerText = "Login with Google/Create Account";
+            });
         }
     </script>
 
